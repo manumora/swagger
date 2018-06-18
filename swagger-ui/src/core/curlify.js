@@ -25,6 +25,8 @@ export default function curl( request ){
       type = v
       curlified.push( "-H " )
       curlified.push( `"${h}: ${v}"` )
+      if(v === 'audio/ogg')
+        curlified.push("-o output.ogg ")
     }
   }
 

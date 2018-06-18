@@ -63,7 +63,7 @@ export default class LiveResponse extends React.Component {
 
     const headers = response.get("headers").toJS()
     const notDocumented = response.get("notDocumented")
-    const isError = response.get("error")
+    let isError = response.get("error")
     const body = response.get("text")
     const duration = response.get("duration")
     const headersKeys = Object.keys(headers)
@@ -76,6 +76,13 @@ export default class LiveResponse extends React.Component {
     })
     const hasHeaders = returnObject.length !== 0
 
+    // Manuel Mora
+    let showDownloadLink = false
+    if(url.endsWith("/recording")){
+      isError = false
+      showDownloadLink = true
+    }
+    
     return (
       <div>
         { curlRequest && <Curl request={ curlRequest }/> }
@@ -86,6 +93,7 @@ export default class LiveResponse extends React.Component {
             </div>
           </div>
         }
+        {showDownloadLink && <div><a href={url} download><h4>Download file</h4></a></div>}
         <h4>Server response</h4>
         <table className="responses-table">
           <thead>
